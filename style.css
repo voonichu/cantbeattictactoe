@@ -1,0 +1,24 @@
+/* Cursor shows clickable attribute, styles the cells */
+.cell {
+    width: 75px;
+    height: 75px;
+    border: 2px solid;
+    box-shadow: 0 0 0 2px;
+    line-height: 75px;
+    font-size: 50px;
+    cursor: pointer;
+}
+
+/* Aligns game to center, changes font */
+#gameContainer {
+    font-family: "Permanent Marker", cursvie;
+    text-align: center;
+}
+
+/* Creates 3x3 grid */
+#cellContainer {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    width: 225px;
+    margin: auto;
+}
