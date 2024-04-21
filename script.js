@@ -67,10 +67,8 @@ function turnClick(square) { // Function that allows human to click
         else { // Assumes difficulty is not easy (in case random function breaks somehow)
             if (!checkWin(origBoard, human) && !checkTie()) turn(bestSpot(origBoard), ai); // Calls hard AI turn function (minimax algorithm)
         }
-        
+	    if (emptySquares(origBoard).length === 0) checkTie(); // Checks for tie if there are no more available squares
     }
-
-    checkTie(); // Checks tie if the last player is the AI
 }
 
 function turn(squareId, player) { // Turn function
