@@ -18,60 +18,64 @@ const winCombos = [
 
 const cells = document.querySelectorAll('.cell'); // Gets cells class from table in tictactoe.html 
 
-//startGame(); // Runs the startGame function
-
 function startGame() {
-    document.querySelector(".startgame").style.display = "none";
-    document.querySelector(".endgame").style.display = "none";
-    origBoard = Array.from(Array(9).keys());
+    document.querySelector(".startgame").style.display = "none"; // Sets startgame section of html code to be hidden
+    document.querySelector(".endgame").style.display = "none"; // Sets endgame section of html code to be hidden
+    origBoard = Array.from(Array(9).keys()); // Sets origBoard to be an empty array of length 9
     for (var i = 0; i < cells.length; i++) {
-        cells[i].addEventListener('click', turnClick, false);
+        cells[i].addEventListener('click', turnClick, false); // Adds event listener to every cell on the board
     }
+    selectFirstPlayer(); // Calls select first player function
 }
 
-function easyMode() {
+function easyMode() { // Sets difficulty to easy
     difficulty = "easy";
     startGame();
 }
 
-function hardMode() {
+function hardMode() { // Sets difficulty to hard (unbeatable/minimax)
     difficulty = "hard";
     startGame();
 }
 
-function selectDifficulty() {
-
+function selectFirstPlayer() { // Randomly decides first player
+    let player1 = Math.floor(Math.random() * 2);
+    if (player1 == 0 && difficulty == "easy") {
+        turn(nextSpot(origBoard), ai);
+    } else if (player1 == 0 && difficulty == "hard") {
+        turn(bestSpot(origBoard), ai);
+    }
 }
 
-function restart() {
-    document.querySelector(".startgame").style.display = "block";
-    document.querySelector(".endgame").style.display = "none";
-    origBoard = Array.from(Array(9).keys());
-    for (var i = 0; i < cells.length; i++) {
-        cells[i].innerText = "";
-        cells[i].style.removeProperty('background-color');
+function restart() { // Restarts the game
+    document.querySelector(".startgame").style.display = "block"; // Difficulty selector becomes visible
+    document.querySelector(".endgame").style.display = "none"; // Removes winner text and background
+    origBoard = Array.from(Array(9).keys()); // Resets origBoard to be an empty array of length 9
+    for (var i = 0; i < cells.length; i++) { // Loops through every cell in array
+        cells[i].innerText = ""; // Removes all text
+        cells[i].style.removeProperty('background-color'); // Removes winner background color 
     }
 }
 
 function turnClick(square) { // Function that allows human to click
-    if (typeof origBoard[square.target.id] == 'number') {
+    if (typeof origBoard[square.target.id] == 'number' && !checkWin(origBoard, human) && !checkTie()) {
         origBoard[square] = human;
         turn(square.target.id, human);
-        if (difficulty == "easy") {
-            if (!checkWin(origBoard, human) && !checkTie()) turn(nextSpot(origBoard), ai);
+        if (difficulty == "easy") { // Checks difficulty
+            if (!checkWin(origBoard, human) && !checkTie()) turn(nextSpot(origBoard), ai); // Calls easy AI turn function
         }
-        else {
-            if (!checkWin(origBoard, human) && !checkTie()) turn(bestMove(origBoard), ai);
+        else { // Assumes difficulty is not easy (in case random function breaks somehow)
+            if (!checkWin(origBoard, human) && !checkTie()) turn(bestSpot(origBoard), ai); // Calls hard AI turn function (minimax algorithm)
         }
         
     }
 }
 
-function turn(squareId, player) {
-    origBoard[squareId] = player;
-    document.getElementById(squareId).innerText = player;
-    let gameWon = checkWin(origBoard, player); 
-    if (gameWon) gameOver(gameWon);
+function turn(squareId, player) { // Turn function
+    origBoard[squareId] = player; // Sets the origBoard array to be player at the specified index
+    document.getElementById(squareId).innerText = player; // Displays the text to be player at specified index
+    let gameWon = checkWin(origBoard, player);  // Checks if the game has been won
+    if (gameWon) gameOver(gameWon); // Sets game state to be game over if gameWon is true
 }
 
 function checkWin(board, player) {
@@ -105,82 +109,82 @@ function declareWinner(who) {
     document.querySelector(".endgame .text").innerText = who; // Changes text to player who wins
 }
 
-function checkTie(gameWon) {
+function checkTie(gameWon) { // Checks if the game is tied
     if (!gameWon) {
         if (emptySquares().length == 0) {
             for (var i = 0; i < cells.length; i++) {
-                cells[i].style.backgroundColor = "green";
-                cells[i].removeEventListener('click', turnClick, false);
+                cells[i].style.backgroundColor = "green"; // Sets all background cells to be green
+                cells[i].removeEventListener('click', turnClick, false); // Removes event listener so player can no longer click
             }
-            declareWinner("Tie Game!");
-            return true;
+            declareWinner("Tie Game!"); // Text to display to player
+            return true; // Returns true to indicate tie
         }
-        return false;
+        return false; // Returns false to let the game continue
     }
 
 }
 
 function emptySquares() {
-    return origBoard.filter(s => typeof s == 'number');
+    return origBoard.filter(s => typeof s == 'number'); // returns an array of all empty squares in origBoard
 }
 
 function nextSpot() {
-        return emptySquares() [0];
+        return emptySquares() [0]; // Returns the next available spot in the empty squares array
 }
 
-function bestMove(board) {
-    return minimax(origBoard, ai).index;
+function bestSpot(board) {
+    return minimax(origBoard, ai).index; // Returns the index for best move from minimax function
 }
     
 function minimax(board, player) {
-    var availSpots = emptySquares();
+    var availSpots = emptySquares(); // Sets a local (funtion) variable to the empty squares array
 
 
-    if (checkWin(board, human)) {
-        return {score: -10};
-    } else if (checkWin(board, ai)) {
-        return {score: 10};
-    } else if (availSpots.length === 0) {
-        return {score: 0};
+    if (checkWin(board, human)) { // Checks if human player wins
+        return {score: -10}; // Returns a score of -10 to indicate a bad result
+    } else if (checkWin(board, ai)) { // Checks if ai player wins
+        return {score: 10}; // Returns a score of 10 to indicate a good result
+    } else if (availSpots.length === 0) { // Checks if all availSpots are filled after checking if either player won (tie)
+        return {score: 0}; // Returns a score of 0 to indicate a neutral score
     }
 
-    var moves = []
-    for (var i = 0; i < availSpots.length; i++) {
-        var move = {};
-        move.index = board[availSpots[i]];
-        board[availSpots[i]] = player;
+    var moves = [] // Creates an empty array named moves
+    for (var i = 0; i < availSpots.length; i++) { // Loops through every available spot
+        var move = {}; // Creates an empty dictionary named move to store all scores (checks how good every move is)
+        move.index = board[availSpots[i]]; // Sets the move index to the next available spot 
+        board[availSpots[i]] = player; // Checks every available spot and sets it the next player
 
-        if (player == ai) {
-            var result = minimax(board, human);
-            move.score = result.score;
-        } else {
-            var result = minimax(board, ai);
-            move.score = result.score;
+        if (player == ai) { // Checks if the player is the AI ("Maximizes" its score)
+            var result = minimax(board, human); // Saves the result and recursively calls itself but changes the player to human
+            move.score = result.score; // Saves the result to move dictionary
+        } else { // Minimizes the score of the human player
+            var result = minimax(board, ai); // Saves the result and recursively calls itself but changes the player to ai
+            move.score = result.score; // Saves the result to move dictionary
         }
 
-        board[availSpots[i]] = move.index;
-        moves.push(move);
+        board[availSpots[i]] = move.index; // Sets the next available spot to the move index
+        moves.push(move); // Pushes move value (score) to moves array
     }
 
-    var bestMove;
+    var bestSpot; // Creates best spot variable
 
-    if (player === ai) {
-        let bestScore = -10000;
-        for (let i = 0; i < moves.length; i++) {
-            if (moves[i].score > bestScore) {
-                bestScore = moves[i].score;
-                bestMove = i;
+    if (player === ai) { // Maximizing
+        let bestScore = -10000; // Creates best score variable and sets it to very low negative number (so it will always start lower)
+        for (let i = 0; i < moves.length; i++) { // Loops through moves array
+            if (moves[i].score > bestScore) { // Checks for highest (max) score
+                bestScore = moves[i].score; // Sets highest score to best score
+                bestSpot = i; // Sets the best spot to the highest score
             }
         }
-    } else {
-        let bestScore = 10000;
-        for (let i = 0; i < moves.length; i++) {
-            if (moves[i].score < bestScore) {
-                bestScore = moves[i].score;
-                bestMove = i;
+    } else { // Minimizing
+        let bestScore = 10000; // Creates best score variable and sets it very high positive number (so it will always start higher)
+        for (let i = 0; i < moves.length; i++) { // Loops through moves array
+            if (moves[i].score < bestScore) { // Checks for lowest (min) score
+                bestScore = moves[i].score; // Sets lowest score to best score (best score for player)
+                bestSpot = i; // Sets best spot to the lowest score (assumes player will always make best move)
             }  
         }
     }
 
-    return moves[bestMove];
+    return moves[bestSpot]; // Returns the best spot for current (iteration) player until final iteration (returns best spot for AI)
 }
