@@ -4,30 +4,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Minimax Tic Tac Toe</title> <!--Sets title-->
+
+    <link rel="stylesheet" href="style.css"> <!--Links CSS file-->
 </head>
 
 <body>
-    <div id="gameContainer">
-        <!--contains the game board-->
-        <h1>Tic Tac Toe</h1>
-        <div id="cellContainer">
-            <!--has 9 cells with a common class but different index to differientiate them-->
-            <div cellIndex="0" class="cell"></div>
-            <div cellIndex="1" class="cell"></div>
-            <div cellIndex="2" class="cell"></div>
-            <div cellIndex="3" class="cell"></div>
-            <div cellIndex="4" class="cell"></div>
-            <div cellIndex="5" class="cell"></div>
-            <div cellIndex="6" class="cell"></div>
-            <div cellIndex="7" class="cell"></div>
-            <div cellIndex="8" class="cell"></div>
-        </div>
-        <h2 id="statusText"></h2>
-        <button id="restartBtn">Restart</button>
+    <h1>Tic Tac Toe</h1>
+    <div class="startgame"> <!--Buttons to choose difficulty-->
+        <button class="easyMode" onClick="easyMode()">Easy</button>
+        <button class="hardMode" onClick="hardMode()">Hard</button>
     </div>
-    <!--links index.js file (gives game functionality and logic)-->
-    <script src="index.js"></script>
+    
+    <table>
+        <tr> <!--Top Row (Cells 0, 1, 2)-->
+            <td class="cell" id="0"></td>
+            <td class="cell" id="1"></td>
+            <td class="cell" id="2"></td>
+        </tr>
+        <tr> <!--Middle Row (Cells 3, 4, 5)-->
+            <td class="cell" id="3"></td>
+            <td class="cell" id="4"></td>
+            <td class="cell" id="5"></td>
+        </tr>
+        <tr> <!--Bottom Row (Cells 6, 7, 8)-->
+            <td class="cell" id="6"></td>
+            <td class="cell" id="7"></td>
+            <td class="cell" id="8"></td>
+        </tr>
+    </table>
+    <div class="endgame">
+        <div class="text"></div>    
+        <button onClick="restart()">Replay</button> <!--Restart Button-->
+    </div>
+    
+    <script src="script.js"></script> <!--Links Javascript file-->
 </body>
 </html>
