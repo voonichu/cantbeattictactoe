@@ -6,14 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minimax Tic Tac Toe</title> <!--Sets title-->
 
+    <!--Links font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css"> <!--Links CSS file-->
 </head>
 
 <body>
     <h1>Tic Tac Toe</h1>
     <div class="startgame"> <!--Buttons to choose difficulty-->
-        <button class="easyMode" onClick="easyMode()">Easy</button>
-        <button class="hardMode" onClick="hardMode()">Hard</button>
+        <button class="easyMode" onClick="easyMode()"><div class="buttonText">Easy</div></button>
+        <button class="hardMode" onClick="hardMode()"><div class="buttonText">Hard</div></button>
     </div>
     
     <table>
@@ -35,7 +40,7 @@
     </table>
     <div class="endgame">
         <div class="text"></div>    
-        <button onClick="restart()">Replay</button> <!--Restart Button-->
+        <button onClick="restart()"><div class="buttonText">Replay</div></button> <!--Restart Button-->
     </div>
     
     <script src="script.js"></script> <!--Links Javascript file-->
