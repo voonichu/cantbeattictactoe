@@ -69,6 +69,8 @@ function turnClick(square) { // Function that allows human to click
         }
         
     }
+
+    checkTie(); // Checks tie if the last player is the AI
 }
 
 function turn(squareId, player) { // Turn function
