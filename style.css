@@ -1,20 +1,33 @@
-h1 {
-    font-family: "Times New Roman", cursive;
+h1 { /* Sets h1 font and centers it */
+    font-family: "Bitter", "Times New Roman", cursive;
     text-align: center;
 }
 
-td {
+.buttonText {
+    font-family: "Bitter", "Times New Roman", cursive;
+    font-weight: bold;
+    margin: 0px;
+}
+
+button {
+    background-color: white;
+    border: 1px solid black;
+    outline: 3px ridge black;
+    border-radius: 2rem;
+}
+
+td { /* Sets each table element to have a board, changes width and height, aligns text and table, changes font and size and changes cursor to a pointer when hovered */
     border: 2px solid #333;
     height: 100px;
     width: 100px;
     text-align: center;
     vertical-align: middle;
-    font-family: "Times New Roman", cursive;
+    font-family: "Bitter", "Times New Roman", cursive;
     font-size: 70px;
     cursor: pointer;
 }
 
-table {
+table { /* collapses table to give criss cross effect */
     border-collapse: collapse;
     position: absolute;
     left: 50%;
@@ -22,33 +35,33 @@ table {
     top: 120px;
 }
 
-table tr:first-child td {
+table tr:first-child td { /* Removes top border to give tic tac toe board effect */
     border-top: 0;
 }
 
-table tr:last-child td {
+table tr:last-child td { /* Removes bottom border to give tic tac toe effect */
     border-bottom: 0;
 }
 
-table tr td:first-child {
+table tr td:first-child { /* Removes left border to give tic tac toe effect */
     border-left: 0;
 }
 
-table tr td:last-child {
+table tr td:last-child { /* Removes right border to give tic tac toe effect */
     border-right: 0;
 }
 
-.easyMode {
+.easyMode { /* Makes easy mode button slightly bigger and spaces it */
     font-size: 14px;
     margin-right: 25px
 }
 
-.hardMode {
+.hardMode { /* Makes hard mode button slightly bigger and spaces it */
     font-size: 14px;
     margin-left: 25px;
 }
 
-.startgame {
+.startgame { /* Creates a backdrop for startgame section in html file (default shown) */
     display: block;
     width: 200px;
     top: 20px;
@@ -62,9 +75,10 @@ table tr td:last-child {
     border-radius: 5px;
     color: white;
     font-size: 2em;
+    font-family: "Bitter", "Times New Roman", cursive;
 }
 
-.endgame {
+.endgame { /* Creates a backdrop for endgame section in html file (default hidden) */
     display: none;
     width: 200px;
     top: 200px;
@@ -78,4 +92,5 @@ table tr td:last-child {
     border-radius: 5px;
     color: white;
     font-size: 2em;
+    font-family: "Bitter", "Times New Roman", cursive;
 }
