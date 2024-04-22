@@ -14,6 +14,7 @@ button {
     border: 1px solid black;
     outline: 3px ridge black;
     border-radius: 2rem;
+    cursor: pointer;
 }
 
 td { /* Sets each table element to have a board, changes width and height, aligns text and table, changes font and size and changes cursor to a pointer when hovered */
